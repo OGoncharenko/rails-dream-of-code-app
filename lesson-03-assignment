@@ -1,0 +1,34 @@
+# Question 1, Question 2
+# I need to create two tables: topics and topic_lessons. The topics table should have a title column, and the
+# topic_lessons table should have topic_id and lesson_id columns.
+
+# Question 3
+# The topic_id column should be a foreign key that references the id column in the topics table, and the lesson_id
+# column should be a foreign key that references the id column in the lessons table.
+
+# Question 4
+# topics:
+# - id: integer
+# - title: string
+# - created_at: datetime
+# - updated_at: datetime
+
+# topic_lessons:
+# - id: integer
+# - topic_id: integer
+# - lesson_id: integer
+# - created_at: datetime
+# - updated_at: datetime
+
+# Question 5
+bin/rails generate migration create_topics
+rails db:migrate
+bin/rails generate migration create_topic_lessons
+rails db:migrate
+
+# Question 13
+Topic::TITLES.each do |title|
+  Topic.create(title: title)
+end
+
+TopicLesson.create(topic: Topic.first, lesson: Lesson.first)
