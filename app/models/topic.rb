@@ -9,5 +9,9 @@ class Topic < ApplicationRecord
     Web Request Cycle
     HTTP
   ]
+
+  has_many :topic_lessons, dependent: :destroy
+  has_many :lessons, through: :topic_lessons
+
   validates :title, inclusion: { in: TITLES }
 end
