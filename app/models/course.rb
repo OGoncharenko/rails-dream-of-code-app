@@ -4,4 +4,22 @@ class Course < ApplicationRecord
   has_many :enrollments
 
   delegate :title, to: :coding_class
+
+  def student_name_list
+    names_list = []
+    self.enrollments.each do |enrollment|
+      names_list << "#{enrollment.student.first_name} #{enrollment.student.last_name}"
+    end
+    names_list
+  end
+
+  def student_email_list
+    email_list = []
+    self.enrollments.each do |enrollment|
+      if enrollment.student.present?
+        email_list << enrollment.student.email
+      end
+    end
+    email_list
+  end
 end
