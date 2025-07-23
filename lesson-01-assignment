@@ -1,0 +1,32 @@
+title = 'Intro to Programming'
+year = '2025'
+term = 'Spring'
+
+# Question 1
+# Simple version
+coding_class = CodingClass.find_by(title:)
+trimester = Trimester.find_by(year:, term:)
+course = Course.find_by(coding_class:, trimester:)
+enrollments = Enrollment.where(course:)
+students = Student.where(id: enrollments.map(&:student_id))
+students.first(2).each {|student| puts "#{student.id}, #{student.email}"};nil
+
+# More efficient version
+students = Student.joins(enrollments: { course: [:coding_class, :trimester] })
+             .where({
+                      enrollments: {
+                        courses: { coding_classes: { title: 'Intro to Programming', },
+                                   trimesters: { year: "2025", term: "Spring" } }
+                      }
+                    }).distinct.limit(2)
+
+students.each { |student| puts "#{student.id}, #{student.email}" };nil
+
+# Question 2
+coding_class = CodingClass.find_by(title:)
+trimester = Trimester.find_by(year:, term:)
+course = Course.find_by(coding_class:, trimester:)
+enrollments = Enrollment.where(course:, final_grade: nil)
+mentor_enrollment_assignments = MentorEnrollmentAssignment.where(enrollment: enrollments)
+mentors = Mentor.where(id: mentor_enrollment_assignments.map(&:mentor_id))
+mentors.first(2).each {|mentor| puts "#{mentor.id}, #{mentor.email}"};nil
