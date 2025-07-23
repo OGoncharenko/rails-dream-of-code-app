@@ -1,0 +1,84 @@
+# Question 1
+
+coding_classes = CodingClass.all
+spring2026 = Trimester.create(year: '2026', term: 'Spring', application_deadline: '2026-02-15', start_date: "2026-03-01", end_date: "2026-06-30")
+Course.create(coding_class: coding_classes.first, trimester: spring2026)
+
+coding_classes.each do |coding_class|
+  puts Course.create(coding_class: coding_class, trimester: spring2026)
+end
+
+# Question 2
+
+student = Student.create(first_name: "Peter", last_name: "Parker", email: "peter.parker@test.com")
+coding_class = CodingClass.find_by(title: 'Intro to Programming')
+course = Course.find_by(coding_class: coding_class, trimester: spring2026)
+enrollment = Enrollment.create(student: student, course: course)
+
+mentor = Mentor.all.find { |mentor| MentorEnrollmentAssignment.where(mentor: mentor).size <= 2 }
+
+# More efficient version
+mentor = Mentor.joins(:mentor_enrollment_assignments).group(:id).having('COUNT(mentor_enrollment_assignments.id) <= 2').first
+
+MentorEnrollmentAssignment.create(mentor: mentor, enrollment: enrollment) if mentor
+
+# Question 3
+
+The users of my application will be persons who wants to share their favorite things and creating the lists of them.
+There will be only one role for users, which is a regular user. They will be able to create, read, update and delete
+their own lists and items. They will also be able to share their lists with other users, but they will not be able to
+edit or delete other users' lists or items.
+There would be admin users who will be able to manage the application, including creating, reading, updating and deleting
+all lists and items, as well as managing users. They will also be able to manage the application settings and configurations.
+
+# Question 4
+Tables: admin_users, users, lists, list_items, categories, list_categories
+admin_users:
+- id: integer
+- email: string
+- encrypted_password: string
+- created_at: datetime
+- updated_at: datetime
+
+users:
+- id: integer
+- email: string
+- encrypted_password: string
+- username: string
+- first_name: string
+- last_name: string
+- created_at: datetime
+- updated_at: datetime
+
+lists:
+- id: integer
+- user_id: integer
+- name: string
+- description: string
+- published_at: datetime
+- created_at: datetime
+- updated_at: datetime
+
+list_items:
+- id: integer
+- list_id: integer
+- name: string
+- position: integer
+- created_at: datetime
+- updated_at: datetime
+
+categories:
+- id: integer
+- name: string
+- description: string
+- created_at: datetime
+- updated_at: datetime
+
+list_categories:
+- id: integer
+- list_id: integer
+- category_id: integer
+- created_at: datetime
+- updated_at: datetime
+
+You can find an img.png of ERD in root directory.
