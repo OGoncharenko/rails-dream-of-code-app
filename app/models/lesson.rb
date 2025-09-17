@@ -3,4 +3,5 @@ class Lesson < ApplicationRecord
 
   has_many :topic_lessons, dependent: :destroy
   has_many :topics, through: :topic_lessons
+  has_many :submissions, dependent: :destroy
 end

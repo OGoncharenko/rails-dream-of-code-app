@@ -3,6 +3,7 @@ class Course < ApplicationRecord
   belongs_to :trimester
   has_many :enrollments
   has_many :students, through: :enrollments
+  has_many :lessons, dependent: :destroy
 
   delegate :title, to: :coding_class
 
