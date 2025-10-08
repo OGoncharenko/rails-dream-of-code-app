@@ -6,3 +6,7 @@
     </li>
   <% end %>
 </ul>
+
+<% if session[:role] == 'admin' %>
+    <%= link_to "New Trimester", new_trimester_path %>
+<% end %>

@@ -3,8 +3,12 @@
 <%= render @trimester %>
 
 <div>
-  <%= link_to "Edit this trimester", edit_trimester_path(@trimester) %> |
+  <% if session[:role] == 'admin' %>
+    <%= link_to "Edit this trimester", edit_trimester_path(@trimester) %> |
+  <% end %>
   <%= link_to "Back to trimesters", trimesters_path %>
 
-  <%#= button_to "Destroy this trimester", @trimester, method: :delete %>
+  <% if session[:role] == 'admin' %>
+    <%= button_to "Destroy this trimester", @trimester, method: :delete %>
+  <% end %>
 </div>

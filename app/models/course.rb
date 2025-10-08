@@ -4,6 +4,7 @@ class Course < ApplicationRecord
   has_many :enrollments
   has_many :students, through: :enrollments
   has_many :lessons, dependent: :destroy
+  has_many :submissions, through: :lessons
 
   delegate :title, to: :coding_class
 

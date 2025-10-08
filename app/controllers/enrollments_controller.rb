@@ -1,5 +1,6 @@
 class EnrollmentsController < ApplicationController
   before_action :set_enrollment, only: %i[ show edit update destroy ]
+  before_action :require_admin, only: %i[ index show ]
 
   # GET /enrollments or /enrollments.json
   def index
@@ -60,11 +61,17 @@ class EnrollmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_enrollment
-      @enrollment = Enrollment.find(params.expect(:id))
+      @enrollment = Enrollment.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def enrollment_params
-      params.expect(enrollment: [ :course_id, :student_id, :final_grade ])
+      params.require(:enrollment).permit( :course_id, :student_id, :final_grade )
     end
+
+  def require_admin
+    unless session[:role] == "admin"
+      redirect_to root_path, alert: "You are not authorized to view this page."
+    end
+  end
 end
