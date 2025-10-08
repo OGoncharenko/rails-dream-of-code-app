@@ -36,7 +36,11 @@ class TrimestersController < ApplicationController
   def destroy
     @trimester = Trimester.find(params[:id])
     @trimester.destroy
-    redirect_to root_path, notice: "Trimester was successfully deleted."
+    if @trimester.destroy
+      redirect_to root_path, notice: "Trimester was successfully deleted."
+    else
+      redirect_to trimesters_path, alert: "Failed to delete trimester."
+    end
   end
 
   private
