@@ -1,10 +1,10 @@
-<%= form_with(model: course) do |form| %>
+<%= form_with(model: @course) do |form| %>
   <% if course.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
 
       <ul>
-        <% course.errors.each do |error| %>
+        <% @course.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -13,7 +13,10 @@
 
   <div class="form-group">
     <%= form.label :coding_class, {}, { class: 'form-text' } %>
-    <%= form.select :coding_class_id, options_from_collection_for_select(@coding_classes, :id, :title), { prompt: 'Select Coding Class' }, { class: 'form-control' } %>
+    <%= form.select :coding_class_id, options_from_collection_for_select(@coding_classes, :id, :title),
+                    { prompt: 'Select Coding Class' },
+                    { class: 'form-control' }
+    %>
   </div>
 
   <div class="form-group">
@@ -26,7 +29,8 @@
     <%= form.number_field :max_enrollment, class: 'form-control' %>
   </div>
 
-  <hr />
-  <%= form.submit 'Create Course', class: 'btn btn-primary' %>
+  <hr/>
+  <%= form.submit class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', courses_path(@course), class: 'btn btn-primary ml-2' %>
 
 <% end %>

@@ -1,0 +1,13 @@
+<% content_for :title, "New Trimester" %>
+
+<h1>New Trimester</h1>
+
+<%= render "form", trimester: @trimester %>
+
+<br>
+
+<div>
+  <%= link_to "Back to Trimesters", trimesters_path %>
+</div>
+
+<%= button_to "Delete this Trimester", @trimester, method: :delete, data: { confirm: "Are you sure?" } if @trimester.persisted? %>

@@ -1,0 +1,26 @@
+<div id="<%= dom_id submission %>">
+  <p>
+    <strong>Course:</strong>
+    <%= submission.course.title %>
+  </p>
+
+  <p>
+    <strong>Lesson:</strong>
+    <%= submission.lesson.title %>
+  </p>
+
+  <p>
+    <strong>Pull request url:</strong>
+    <%= link_to submission.pull_request_url, submission.pull_request_url, target: '_blank' %>
+  </p>
+
+  <p>
+    <strong>Student:</strong>
+    <%= submission.enrollment.student_name %>
+  </p>
+
+  <p>
+    <strong>Review result:</strong>
+    <%= submission.review_result&.humanize %>
+  </p>
+</div>

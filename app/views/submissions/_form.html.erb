@@ -1,5 +1,3 @@
-<h1>New Submission for <%= @course.title %></h1>
-
 <%= form_with(model: [@course, @submission], local: true) do |form| %>
   <% if @submission.errors.any? %>
     <div style="color: red">
@@ -23,11 +21,24 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :url, 'URL', class: 'form-text' %>
-    <%= form.text_field :url, class: 'form-control' %>
+    <%= form.label :pull_request_url, 'URL', class: 'form-text' %>
+    <%= form.text_field :pull_request_url, class: 'form-control' %>
   </div>
 
-  <hr />
-  <%= form.submit 'Submit', class: 'btn btn-primary' %>
-  <%= link_to 'Cancel', course_submissions_path(@course), class: 'btn btn-primary ml-2' %>
+
+  <% if session[:role] == "mentor" %>
+    <div class="form-group">
+      <%= form.label :review_result, 'Review result', class: 'form-text' %>
+      <%= form.select :review_result,
+                      options_for_select([['Pending', 'pending'],
+                                          ['Approved', 'approved'],
+                                          ['Needs Improvement', 'needs_improvement']], @submission.review_result),
+                      { prompt: 'Select Review Result' },
+                      { class: 'form-control' }
+      %>
+    </div>
+  <% end %>
+
+  <hr/>
+  <%= form.submit class: 'btn btn-primary' %>
 <% end %>

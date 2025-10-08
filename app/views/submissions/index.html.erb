@@ -1,0 +1,35 @@
+<h1>Submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lesson</th>
+      <th>Student</th>
+      <th>Submitted At</th>
+      <th>Review Result</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submissions.each do |submission| %>
+      <tr>
+        <td><%= submission.lesson.title %></td>
+        <td><%= submission.enrollment.student_name %></td>
+        <td><%= submission.created_at.strftime("%B %d, %Y %I:%M %p") %></td>
+        <td><%= submission.review_result&.humanize %></td>
+        <td><%= link_to 'Show', [submission.course, submission] %></td>
+        <% if session[:role] == 'mentor' %>
+          <td><%= link_to 'Edit', edit_course_submission_path(submission.course, submission) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if session[:role] == 'student' %>
+<div>
+  <%= link_to 'New submission', new_course_submission_path(@course, @submission) %>
+</div>
+<% end %>
+
