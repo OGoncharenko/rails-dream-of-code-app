@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
-  resources :students
-  resources :mentors
-  resources :enrollments
-  resources :mentor_enrollment_assignments
-  resources :lessons
-  resources :courses do
-    resources :submissions
-  end
-  resources :coding_classes
-  resources :trimesters
+      resources :students
+      resources :mentors
+      resources :enrollments
+      resources :mentor_enrollment_assignments
+      resources :lessons
+      resources :courses do
+        resources :submissions
+      end
+      resources :coding_classes
+      resources :trimesters
 
   get "dashboard", to: "admin_dashboard#index", as: "dashboard"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -20,6 +20,13 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
+
+namespace :api do
+  namespace :v1 do
+    get "/courses", to: "courses#index"
+    get "/courses/:course_id/enrollments", to: "enrollments#index"
+  end
+end
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
